@@ -3,6 +3,11 @@
   --fg: #0f172a;         /* slate-900 */
   --muted: #475569;      /* slate-600 */
   --rule: #e2e8f0;       /* slate-200 */
+
+  --s-1: 6px;
+  --s-2: 10px;
+  --s-3: 16px;
+  --s-4: 24px;
 }
 
 * { box-sizing: border-box; }
@@ -12,6 +17,8 @@ body {
   color: var(--fg);
   font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   background: #fff;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 .container {
@@ -20,10 +27,11 @@ body {
   padding: 28px 18px 56px;
 }
 
+/* Header */
 .header h1 {
   font-size: 28px;
   line-height: 1.2;
-  margin: 0 0 6px;
+  margin: 0 0 var(--s-1);
   text-align: center;
   letter-spacing: .2px;
 }
@@ -35,23 +43,26 @@ body {
   margin-bottom: 18px;
   flex-wrap: wrap;
 }
-.links a {
-  color: #0a66c2;
-  text-decoration: none;
-}
+.links a { color: #0a66c2; text-decoration: none; }
 .links a:hover { text-decoration: underline; }
 .sep { color: var(--muted); }
 
-.section { margin-top: 24px; }
+/* Sections */
+.section { margin-top: var(--s-4); }
 .section-title {
   font-size: 15px;
   letter-spacing: .6px;
-  text-transform: none;
   font-weight: 700;
   color: var(--muted);
-  margin: 18px 0 8px;
+  margin: 12px 0 8px;
   padding: 8px 0;
   border-bottom: 1px solid var(--rule);
+}
+/* Emphasize Interests & Education: larger + solid black rule */
+.section-title.emph {
+  font-size: 18px;
+  color: #111827;
+  border-bottom: 2px solid #000;  /* fully black underline */
 }
 
 .list { margin-top: 4px; }
@@ -64,22 +75,40 @@ body {
 .two-col { margin-top: 10px; }
 
 .left.strong { font-weight: 700; }
-.right.light { color: var(--muted); white-space: nowrap; }
-
-.bullets {
-  margin: 6px 0 0 18px;
-  padding: 0;
+/* Dates / right column italicized */
+.right.light {
+  color: var(--muted);
+  white-space: nowrap;
+  font-style: italic;    /* italicize dates */
 }
-.bullets li { margin: 2px 0; }
 
+/* Bullets + paragraphs */
+.bullets { margin: 6px 0 0 18px; padding: 0; }
+.bullets li { margin: 2px 0; }
 .para { margin: 8px 0 0; }
 
-/* Make sure small screens look clean */
+/* Mobile optimizations */
 @media (max-width: 640px) {
-  .row { grid-template-columns: 1fr; }
-  .right.light { justify-self: start; }
-  .container { padding: 20px 14px 40px; }
-  .header h1 { font-size: 24px; }
+  body { line-height: 1.55; }
+  .container { padding: 18px 14px 36px; }
+  .header h1 { font-size: 24px; margin-bottom: 8px; }
+  .section { margin-top: 20px; }
+
+  .row {
+    grid-template-columns: 1fr;   /* stack title and date */
+    gap: 4px;
+  }
+  .right.light {
+    white-space: normal;          /* allow wrap on small screens */
+    margin-top: -2px;             /* tuck closer to title */
+    font-size: 0.95rem;
+  }
+
+  .section-title { margin: 10px 0 6px; padding: 6px 0; }
+  .section-title.emph { font-size: 19px; }
+
+  .para { margin-top: 6px; }
+  .bullets { margin-left: 16px; }
 }
 
 /* Print-friendly */
@@ -88,17 +117,4 @@ body {
   .links a { color: #000; text-decoration: none; }
   .container { padding: 0; }
   .section-title { color: #000; }
-}
-
-/* make dates italic */
-.right.light {
-  color: var(--muted);
-  white-space: nowrap;
-  font-style: italic;   /* NEW */
-}
-
-/* bump specific headers + make their underline black */
-.section-title.emph {    /* NEW */
-  font-size: 18px;
-  border-bottom: 2px solid #000;
 }
