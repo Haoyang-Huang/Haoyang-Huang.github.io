@@ -127,13 +127,14 @@
     }
     app.appendChild(header);
 
+    // emphasize these section headings
+    const emphTitles = ["Interests","Education","Select Achievements","Experience"];
+
     // sections
     for (const sec of data.sections) {
       const section = $("section", "section");
-
-      // emphasize Interests & Education
       const h2 = $("h2", "section-title", sec.title);
-      if (["Interests", "Education"].includes(sec.title)) h2.classList.add("emph");
+      if (emphTitles.includes(sec.title)) h2.classList.add("emph");
       section.appendChild(h2);
 
       if (sec.type === "text") {
@@ -141,42 +142,48 @@
       }
 
       if (sec.type === "edu") {
-        const list = $("div", "list");
+        const list = $("div", "list edu-list");
         for (const it of sec.items) {
+          const item = $("div", "item-block edu-item");
           const row = $("div", "row two-col");
           row.appendChild($("div", "left strong", it.left));
           row.appendChild($("div", "right light", it.right));
-          list.appendChild(row);
+          item.appendChild(row);
 
           if (it.bullets?.length) {
             const ul = $("ul", "bullets");
             it.bullets.forEach(b => ul.appendChild($("li", null, b)));
-            list.appendChild(ul);
+            item.appendChild(ul);
           }
+          list.appendChild(item);
         }
         section.appendChild(list);
       }
 
       if (sec.type === "awards") {
-        const list = $("div", "list");
+        const list = $("div", "list awards-list");
         for (const a of sec.items) {
-          const head = $("div", "row two-col");
+          const item = $("div", "item-block award-item");
+          const head = $("div", "row two-col awards-row");
           head.appendChild($("div", "left strong", a.title));
           head.appendChild($("div", "right light", a.year));
-          list.appendChild(head);
-          if (a.desc) list.appendChild($("p", "para", a.desc));
+          item.appendChild(head);
+          if (a.desc) item.appendChild($("p", "para", a.desc));
+          list.appendChild(item);
         }
         section.appendChild(list);
       }
 
       if (sec.type === "experience") {
-        const list = $("div", "list");
+        const list = $("div", "list exp-list");
         for (const ex of sec.items) {
+          const item = $("div", "item-block exp-item");
           const head = $("div", "row two-col");
           head.appendChild($("div", "left strong", ex.left));
           head.appendChild($("div", "right light", ex.right));
-          list.appendChild(head);
-          if (ex.desc) list.appendChild($("p", "para", ex.desc));
+          item.appendChild(head);
+          if (ex.desc) item.appendChild($("p", "para", ex.desc));
+          list.appendChild(item);
         }
         section.appendChild(list);
       }
@@ -186,3 +193,4 @@
   </script>
 </body>
 </html>
+
