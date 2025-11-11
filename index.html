@@ -10,13 +10,13 @@
 <body>
   <main id="app" class="container" aria-label="Resume"></main>
 
-  <!-- Edit your content here. Replace the email/LinkedIn URLs and any text you want. -->
+  <!-- Edit contact links as needed -->
   <script type="application/json" id="resume-data">
   {
     "name": "Haoyang Huang",
     "links": [
-      { "label": "Email",   "url": "mailto:huanghaoyangemail@gmail.com" },
-      { "label": "LinkedIn","url": "https://www.linkedin.com/in/haoyang-huang-2097a8297/" }
+      { "label": "Email",    "url": "mailto:you@example.com" },
+      { "label": "LinkedIn", "url": "https://www.linkedin.com/in/yourprofile" }
     ],
     "sections": [
       {
@@ -58,7 +58,7 @@
           {
             "title": "S.T. Yau Award (Asia) – Gold",
             "year": "2025",
-            "desc": "Placed 1st in Asia in this research competition, awarded USD$5000 cash prize. Organized by The Hong Kong Academy of Sciences and YMSC, Tsinghua University."
+            "desc": "Placed 1st in Asia in this research competition, awarded USD$5000 cash prize.<br>Organized by The Hong Kong Academy of Sciences and YMSC, Tsinghua University."
           },
           {
             "title": "Singapore Physics Olympiad – Gold",
@@ -98,25 +98,27 @@
   </script>
 
   <script>
-    // Tiny renderer: builds the resume from the JSON above
+    // tiny renderer
     const $ = (t, cls, html) => {
       const el = document.createElement(t);
       if (cls) el.className = cls;
-      if (html) el.innerHTML = html;
+      if (html !== undefined) el.innerHTML = html;
       return el;
     };
 
     const data = JSON.parse(document.getElementById("resume-data").textContent);
-    const app = document.getElementById("app");
+    const app  = document.getElementById("app");
 
-    // Header
+    // header
     const header = $("header", "header");
     header.appendChild($("h1", null, data.name));
     if (data.links?.length) {
       const nav = $("nav", "links");
       data.links.forEach((l, i) => {
         const a = document.createElement("a");
-        a.href = l.url; a.textContent = l.label; a.rel = "noopener";
+        a.href = l.url;
+        a.textContent = l.label;
+        a.rel = "noopener";
         a.target = l.url.startsWith("http") ? "_blank" : "_self";
         nav.appendChild(a);
         if (i < data.links.length - 1) nav.appendChild($("span", "sep", " | "));
@@ -125,10 +127,14 @@
     }
     app.appendChild(header);
 
-    // Sections
+    // sections
     for (const sec of data.sections) {
       const section = $("section", "section");
-      section.appendChild($("h2", "section-title", sec.title));
+
+      // emphasize Interests & Education
+      const h2 = $("h2", "section-title", sec.title);
+      if (["Interests", "Education"].includes(sec.title)) h2.classList.add("emph");
+      section.appendChild(h2);
 
       if (sec.type === "text") {
         section.appendChild($("p", "para", sec.text));
@@ -141,6 +147,7 @@
           row.appendChild($("div", "left strong", it.left));
           row.appendChild($("div", "right light", it.right));
           list.appendChild(row);
+
           if (it.bullets?.length) {
             const ul = $("ul", "bullets");
             it.bullets.forEach(b => ul.appendChild($("li", null, b)));
