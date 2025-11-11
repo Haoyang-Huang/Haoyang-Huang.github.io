@@ -89,3 +89,16 @@ body {
   .container { padding: 0; }
   .section-title { color: #000; }
 }
+
+/* make dates italic */
+.right.light {
+  color: var(--muted);
+  white-space: nowrap;
+  font-style: italic;   /* NEW */
+}
+
+/* bump specific headers + make their underline black */
+.section-title.emph {    /* NEW */
+  font-size: 18px;
+  border-bottom: 2px solid #000;
+}
