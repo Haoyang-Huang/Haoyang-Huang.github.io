@@ -3,73 +3,179 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Resume</title>
+  <title>Haoyang Huang — Resume</title>
   <meta name="robots" content="noindex, nofollow" />
-  <style>
-    :root { --maxw: 900px; }
-
-    html, body { height: 100%; margin: 0; }
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
-
-    /* Desktop / tablet: show embedded PDF centered and tall */
-    .wrap {
-      min-height: 100dvh;
-      display: grid;
-      place-items: center;
-      padding: 0;
-    }
-    .frame {
-      width: min(100%, var(--maxw));
-      height: 100dvh;
-      border: 0;
-      display: block;
-    }
-
-    /* Mobile: hide embed, show big open/download buttons instead */
-    .mobile-panel {
-      display: none;
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 20px 16px 40px;
-      text-align: center;
-    }
-    .title { font-size: 18px; margin: 8px 0 16px; }
-    .btns { display: grid; gap: 12px; }
-    .btn {
-      display: inline-block;
-      padding: 14px 16px;
-      text-decoration: none;
-      border-radius: 12px;
-      border: 1px solid #d0d7de;
-    }
-    .btn.primary { background: #0d1117; color: #fff; border-color: #0d1117; }
-    .hint { font-size: 14px; color: #59636e; margin-top: 8px; }
-
-    @media (max-width: 640px) {
-      .frame { display: none; }
-      .wrap { min-height: 100svh; }
-      .mobile-panel { display: block; }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Embedded PDF for larger screens -->
-  <div class="wrap">
-    <!-- The zoom hint helps Chrome/Firefox fit to width. Some mobile browsers ignore it. -->
-    <object class="frame" data="resume.pdf#zoom=page-width" type="application/pdf">
-      <!-- Fallback if the browser cannot embed PDFs -->
-      <iframe class="frame" src="resume.pdf#zoom=page-width"></iframe>
-    </object>
-  </div>
+  <main id="app" class="container" aria-label="Resume"></main>
 
-  <!-- Mobile-friendly panel -->
-  <div class="mobile-panel">
-    <div class="title">Open your resume</div>
-    <div class="btns">
-      <a class="btn primary" href="resume.pdf" target="_blank" rel="noopener">Open in new tab</a>
-      <a class="btn" href="resume.pdf" download>Download PDF</a>
-    </div>
-    <div class="hint">Some phones do not display PDFs inside a page. Use the buttons above.</div>
-  </div>
+  <!-- Edit your content here. Replace the email/LinkedIn URLs and any text you want. -->
+  <script type="application/json" id="resume-data">
+  {
+    "name": "Haoyang Huang",
+    "links": [
+      { "label": "Email",   "url": "mailto:you@example.com" },
+      { "label": "LinkedIn","url": "https://www.linkedin.com/in/yourprofile" }
+    ],
+    "sections": [
+      {
+        "type": "text",
+        "title": "Interests",
+        "text": "My areas of interest span the fields of Engineering, Theoretical Physics, and Quantitative Finance."
+      },
+      {
+        "type": "edu",
+        "title": "Education",
+        "items": [
+          {
+            "left": "Raffles Junior College",
+            "right": "Grad. Dec 2025",
+            "bullets": [
+              "H2 Physics/Math/Computing/Economics + H3 Physics",
+              "Grade: AAAA + Distinction (Prelims)"
+            ]
+          },
+          {
+            "left": "Raffles Institution",
+            "right": "Grad. Dec 2023",
+            "bullets": [
+              "Triple Science + History (Physics & History Accelerated Class)",
+              "GPA: 3.87/4.00"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "awards",
+        "title": "Select Achievements",
+        "items": [
+          {
+            "title": "Asian Physics Olympiad – Bronze",
+            "year": "2025",
+            "desc": "1 of 8 students selected for the Singapore National Team."
+          },
+          {
+            "title": "S.T. Yau Award (Asia) – Gold",
+            "year": "2025",
+            "desc": "Placed 1st in Asia in this research competition, awarded USD$5000 cash prize. Organized by The Hong Kong Academy of Sciences and YMSC, Tsinghua University."
+          },
+          {
+            "title": "Singapore Physics Olympiad – Gold",
+            "year": "2024",
+            "desc": "Placed top 15 individually in Singapore."
+          },
+          {
+            "title": "Singapore Young Physicists’ Tournament – Gold",
+            "year": "2023",
+            "desc": "Placed 2nd in Singapore for this physics research team competition."
+          }
+        ]
+      },
+      {
+        "type": "experience",
+        "title": "Experience",
+        "items": [
+          {
+            "left": "Project FIZIKA",
+            "right": "May 2025 – Present",
+            "desc": "Co-founded an educational nonprofit that helps nurture secondary and JC students’ interest in STEM through online Olympiad courses and partnerships with secondary schools. Received endorsement and funding from the National Youth Council (NYC) Singapore, having been awarded a grant quantum of SGD$3000. You may find more information <a href=\"#\" target=\"_blank\" rel=\"noopener\">here</a>."
+          },
+          {
+            "left": "Science Research Program @NUS",
+            "right": "May 2024 – Mar 2025",
+            "desc": "Conducted research at the National University of Singapore’s Department of Physics under Prof. Nikolai Yakovlev on Magnetic Impedance Spectroscopy. Won a Silver Award at SSEF."
+          },
+          {
+            "left": "Research Intern @DSO",
+            "right": "Nov 2022 – Dec 2022",
+            "desc": "Interned at the Defense Science Organization conducting research on Natural Language Processing. Won a Merit Award at SSEF and the Youth Science Conference."
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <script>
+    // Tiny renderer: builds the resume from the JSON above
+    const $ = (t, cls, html) => {
+      const el = document.createElement(t);
+      if (cls) el.className = cls;
+      if (html) el.innerHTML = html;
+      return el;
+    };
+
+    const data = JSON.parse(document.getElementById("resume-data").textContent);
+    const app = document.getElementById("app");
+
+    // Header
+    const header = $("header", "header");
+    header.appendChild($("h1", null, data.name));
+    if (data.links?.length) {
+      const nav = $("nav", "links");
+      data.links.forEach((l, i) => {
+        const a = document.createElement("a");
+        a.href = l.url; a.textContent = l.label; a.rel = "noopener";
+        a.target = l.url.startsWith("http") ? "_blank" : "_self";
+        nav.appendChild(a);
+        if (i < data.links.length - 1) nav.appendChild($("span", "sep", " | "));
+      });
+      header.appendChild(nav);
+    }
+    app.appendChild(header);
+
+    // Sections
+    for (const sec of data.sections) {
+      const section = $("section", "section");
+      section.appendChild($("h2", "section-title", sec.title));
+
+      if (sec.type === "text") {
+        section.appendChild($("p", "para", sec.text));
+      }
+
+      if (sec.type === "edu") {
+        const list = $("div", "list");
+        for (const it of sec.items) {
+          const row = $("div", "row two-col");
+          row.appendChild($("div", "left strong", it.left));
+          row.appendChild($("div", "right light", it.right));
+          list.appendChild(row);
+          if (it.bullets?.length) {
+            const ul = $("ul", "bullets");
+            it.bullets.forEach(b => ul.appendChild($("li", null, b)));
+            list.appendChild(ul);
+          }
+        }
+        section.appendChild(list);
+      }
+
+      if (sec.type === "awards") {
+        const list = $("div", "list");
+        for (const a of sec.items) {
+          const head = $("div", "row two-col");
+          head.appendChild($("div", "left strong", a.title));
+          head.appendChild($("div", "right light", a.year));
+          list.appendChild(head);
+          if (a.desc) list.appendChild($("p", "para", a.desc));
+        }
+        section.appendChild(list);
+      }
+
+      if (sec.type === "experience") {
+        const list = $("div", "list");
+        for (const ex of sec.items) {
+          const head = $("div", "row two-col");
+          head.appendChild($("div", "left strong", ex.left));
+          head.appendChild($("div", "right light", ex.right));
+          list.appendChild(head);
+          if (ex.desc) list.appendChild($("p", "para", ex.desc));
+        }
+        section.appendChild(list);
+      }
+
+      app.appendChild(section);
+    }
+  </script>
 </body>
 </html>
