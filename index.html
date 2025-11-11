@@ -1,19 +1,75 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Resume</title>
-  <meta name="robots" content="noindex, nofollow">
+  <meta name="robots" content="noindex, nofollow" />
   <style>
-    html, body { height:100%; margin:0 }
-    .frame { width: min(100%, 900px); height: 95vh; border: 0; display:block; margin: 2.5vh auto; }
-    .note { text-align:center; font: 14px system-ui }
+    :root { --maxw: 900px; }
+
+    html, body { height: 100%; margin: 0; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+
+    /* Desktop / tablet: show embedded PDF centered and tall */
+    .wrap {
+      min-height: 100dvh;
+      display: grid;
+      place-items: center;
+      padding: 0;
+    }
+    .frame {
+      width: min(100%, var(--maxw));
+      height: 100dvh;
+      border: 0;
+      display: block;
+    }
+
+    /* Mobile: hide embed, show big open/download buttons instead */
+    .mobile-panel {
+      display: none;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+      text-align: center;
+    }
+    .title { font-size: 18px; margin: 8px 0 16px; }
+    .btns { display: grid; gap: 12px; }
+    .btn {
+      display: inline-block;
+      padding: 14px 16px;
+      text-decoration: none;
+      border-radius: 12px;
+      border: 1px solid #d0d7de;
+    }
+    .btn.primary { background: #0d1117; color: #fff; border-color: #0d1117; }
+    .hint { font-size: 14px; color: #59636e; margin-top: 8px; }
+
+    @media (max-width: 640px) {
+      .frame { display: none; }
+      .wrap { min-height: 100svh; }
+      .mobile-panel { display: block; }
+    }
   </style>
 </head>
 <body>
-  <object class="frame" data="resume.pdf#toolbar=0" type="application/pdf">
-    <p class="note">Cannot display the PDF. <a href="resume.pdf">Download instead</a>.</p>
-  </object>
+  <!-- Embedded PDF for larger screens -->
+  <div class="wrap">
+    <!-- The zoom hint helps Chrome/Firefox fit to width. Some mobile browsers ignore it. -->
+    <object class="frame" data="resume.pdf#zoom=page-width" type="application/pdf">
+      <!-- Fallback if the browser cannot embed PDFs -->
+      <iframe class="frame" src="resume.pdf#zoom=page-width"></iframe>
+    </object>
+  </div>
+
+  <!-- Mobile-friendly panel -->
+  <div class="mobile-panel">
+    <div class="title">Open your resume</div>
+    <div class="btns">
+      <a class="btn primary" href="resume.pdf" target="_blank" rel="noopener">Open in new tab</a>
+      <a class="btn" href="resume.pdf" download>Download PDF</a>
+    </div>
+    <div class="hint">Some phones do not display PDFs inside a page. Use the buttons above.</div>
+  </div>
 </body>
 </html>
