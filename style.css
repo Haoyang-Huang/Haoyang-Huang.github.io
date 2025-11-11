@@ -58,7 +58,7 @@ body {
   padding: 8px 0;
   border-bottom: 1px solid var(--rule);
 }
-/* Emphasize Interests & Education: larger + solid black rule */
+/* Emphasize these sections: larger + solid black underline */
 .section-title.emph {
   font-size: 18px;
   color: #111827;
@@ -66,20 +66,27 @@ body {
 }
 
 .list { margin-top: 4px; }
+
+/* Give breathing room to items */
+.item-block { margin: 18px 0; }
+.awards-list .item-block { margin: 20px 0; }
+.exp-list .item-block { margin: 22px 0; }
+
+/* Row structure */
 .row {
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: baseline;
   gap: 16px;
 }
-.two-col { margin-top: 10px; }
+.two-col { margin-top: 6px; }
 
 .left.strong { font-weight: 700; }
 /* Dates / right column italicized */
 .right.light {
   color: var(--muted);
   white-space: nowrap;
-  font-style: italic;    /* italicize dates */
+  font-style: italic;
 }
 
 /* Bullets + paragraphs */
@@ -90,22 +97,27 @@ body {
 /* Mobile optimizations */
 @media (max-width: 640px) {
   body { line-height: 1.55; }
-  .container { padding: 18px 14px 36px; }
+  .container { padding: 18px 14px 40px; }
   .header h1 { font-size: 24px; margin-bottom: 8px; }
   .section { margin-top: 20px; }
 
-  .row {
-    grid-template-columns: 1fr;   /* stack title and date */
-    gap: 4px;
-  }
-  .right.light {
-    white-space: normal;          /* allow wrap on small screens */
-    margin-top: -2px;             /* tuck closer to title */
-    font-size: 0.95rem;
-  }
+  /* Stack rows by default on small screens */
+  .row { grid-template-columns: 1fr; gap: 4px; }
+
+  /* BUT keep award title + year on one line with year right-aligned */
+  .row.awards-row { grid-template-columns: 1fr auto; }
+  .row.awards-row .right.light { justify-self: end; white-space: nowrap; }
+
+  /* Tighter right column spacing elsewhere on mobile */
+  .right.light { white-space: normal; margin-top: -2px; font-size: 0.95rem; }
 
   .section-title { margin: 10px 0 6px; padding: 6px 0; }
   .section-title.emph { font-size: 19px; }
+
+  /* Keep extra room between items so it doesn't feel cramped */
+  .item-block { margin: 18px 0; }
+  .awards-list .item-block { margin: 18px 0; }
+  .exp-list .item-block { margin: 20px 0; }
 
   .para { margin-top: 6px; }
   .bullets { margin-left: 16px; }
