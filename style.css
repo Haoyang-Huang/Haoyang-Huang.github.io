@@ -27,7 +27,6 @@ body {
   padding: 28px 18px 56px;
 }
 
-/* Header */
 .header h1 {
   font-size: 28px;
   line-height: 1.2;
@@ -47,7 +46,6 @@ body {
 .links a:hover { text-decoration: underline; }
 .sep { color: var(--muted); }
 
-/* Sections */
 .section { margin-top: var(--s-4); }
 .section-title {
   font-size: 15px;
@@ -58,21 +56,21 @@ body {
   padding: 8px 0;
   border-bottom: 1px solid var(--rule);
 }
-/* Emphasize these sections: larger + solid black underline */
+
 .section-title.emph {
   font-size: 20px;
   color: #111827;
-  border-bottom: 2px solid #000;  /* fully black underline */
+  border-bottom: 2px solid #000;  
 }
 
 .list { margin-top: 4px; }
 
-/* Give breathing room to items */
+
 .item-block { margin: 18px 0; }
 .awards-list .item-block { margin: 20px 0; }
 .exp-list .item-block { margin: 22px 0; }
 
-/* Row structure */
+
 .row {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -82,39 +80,39 @@ body {
 .two-col { margin-top: 6px; }
 
 .left.strong { font-weight: 700; }
-/* Dates / right column italicized */
+
 .right.light {
   color: var(--muted);
   white-space: nowrap;
   font-style: italic;
 }
 
-/* Bullets + paragraphs */
+
 .bullets { margin: 6px 0 0 18px; padding: 0; }
 .bullets li { margin: 2px 0; }
 .para { margin: 8px 0 0; }
 
-/* Mobile optimizations */
+
 @media (max-width: 640px) {
   body { line-height: 1.55; }
   .container { padding: 18px 14px 40px; }
   .header h1 { font-size: 24px; margin-bottom: 8px; }
   .section { margin-top: 20px; }
 
-  /* Stack rows by default on small screens */
+
   .row { grid-template-columns: 1fr; gap: 4px; }
 
-  /* BUT keep award title + year on one line with year right-aligned */
+
   .row.awards-row { grid-template-columns: 1fr auto; }
   .row.awards-row .right.light { justify-self: end; white-space: nowrap; }
 
-  /* Tighter right column spacing elsewhere on mobile */
+  
   .right.light { white-space: normal; margin-top: -2px; font-size: 0.95rem; }
 
   .section-title { margin: 10px 0 6px; padding: 6px 0; }
   .section-title.emph { font-size: 19px; }
 
-  /* Keep extra room between items so it doesn't feel cramped */
+
   .item-block { margin: 18px 0; }
   .awards-list .item-block { margin: 18px 0; }
   .exp-list .item-block { margin: 20px 0; }
@@ -123,7 +121,7 @@ body {
   .bullets { margin-left: 16px; }
 }
 
-/* Print-friendly */
+
 @media print {
   body { color: #000; }
   .links a { color: #000; text-decoration: none; }
