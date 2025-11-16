@@ -10,7 +10,7 @@
 <body>
   <main id="app" class="container" aria-label="Resume"></main>
 
-  <!-- Edit contact links as needed -->
+
   <script type="application/json" id="resume-data">
   {
     "name": "Haoyang Huang",
@@ -98,7 +98,6 @@
   </script>
 
   <script>
-    // tiny renderer
     const $ = (t, cls, html) => {
       const el = document.createElement(t);
       if (cls) el.className = cls;
@@ -127,10 +126,10 @@
     }
     app.appendChild(header);
 
-    // emphasize these section headings
+
     const emphTitles = ["Interests","Education","Select Achievements","Experience"];
 
-    // sections
+
     for (const sec of data.sections) {
       const section = $("section", "section");
       const h2 = $("h2", "section-title", sec.title);
