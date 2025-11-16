@@ -60,7 +60,7 @@ body {
 }
 /* Emphasize these sections: larger + solid black underline */
 .section-title.emph {
-  font-size: 18px;
+  font-size: 20px;
   color: #111827;
   border-bottom: 2px solid #000;  /* fully black underline */
 }
